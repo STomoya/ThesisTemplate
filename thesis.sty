@@ -72,8 +72,6 @@
 % \end{thepublications}
 \newenvironment{thepublications}[2]{%
   \renewcommand{\bibname}{#1}%
-  \global\let\presectionname\relax
-  \global\let\postsectionname\relax
   \section*{\bibname}\@mkboth{\bibname}{}%
   \addcontentsline{toc}{section}{\bibname}%
    \list{\@biblabel{\@arabic\c@enumiv}}%
