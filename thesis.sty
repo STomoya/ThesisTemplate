@@ -44,10 +44,57 @@
 % hyperref
 \PassOptionsToPackage{hyphens}{url}
 \usepackage[hidelinks]{hyperref}
+% cite
+% nobreak: No line-breaks inside citation
+% nocompress: [1-3] -> [1,2,3]. Optional.
+\usepackage[nobreak,nocompress]{cite}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Things for publication list.
+% See README.md for details.
 
 % Add bib for publications list.
+% This will not be used in the final version.
 \usepackage[resetlabels]{multibib}
-\newcites{pub}{List of Publications}
+\newcites{pub}{Publications}
+
+% environment for publications
+%   This environment is for creating reference lists with multiple sections.
+% from:
+%   - https://github.com/texjporg/jsclasses/blob/7a2875659bc180d67c7ee83d2e915667a6bc244b/jsreport.cls#L1742-L1754
+% modified to:
+%   - use sections instead of chapters
+%   - first arg. is used as section title.
+% usage:
+% \begin{thepublications}{Section Title}{9} % 9 is the number of refernces. It changes the spacing between [n] and fisrt author name.
+%   \bibitem{key}
+%   Authors, Title, Booktitle, Pages, Year. Note.
+% \end{thepublications}
+\newenvironment{thepublications}[2]{%
+  \renewcommand{\bibname}{#1}%
+  \global\let\presectionname\relax
+  \global\let\postsectionname\relax
+  \section*{\bibname}\@mkboth{\bibname}{}%
+  \addcontentsline{toc}{section}{\bibname}%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#2}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thepublications' environment}}%
+   \endlist}
+
+% End of things for publication list.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Others
 \usepackage{multirow}
@@ -57,7 +104,9 @@
 \setstretch{1.3}  % line stretch.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % fancyhdr settings
+
 % properly space headheight. This is optional. Just for erasing warnings.
 \setlength{\headheight}{14.5pt}
 % macro to setup fancy pagestyle
@@ -80,6 +129,9 @@
 }
 % macro to set \leftmark (Chapter title) to a shorter name.
 \newcommand{\shorttitle}[1]{\markboth{#1}{#1}}
+
+% End of fancyhdr settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Add graphic path
 \graphicspath{{figs/}}
