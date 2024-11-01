@@ -145,7 +145,6 @@
 \newcommand{\etal}{\emph{et al.}}
 
 
-% \maketitle macro that makes the title.
 \renewcommand{\maketitle}{
   \makeatletter
 
@@ -168,11 +167,11 @@
     \includegraphics[width=0.4\textwidth]{doshisha.png}% logo
   \fi
 
-  \vspace{5.0em}%
-  {\Huge\bf \@title }%
+  \vspace{3.0em}%
+  {\setstretch{0.9}\Huge\@title\par}%
 
   \vspace{2.5em}%
-  {\Large\bf (\@subtitle)}%
+  {\setstretch{0.8}\Large(\@subtitle)\par}%
   \vfill%
 
   {\Large \@studentid}%
